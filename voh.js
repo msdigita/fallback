@@ -1,5 +1,6 @@
 (function() {
     // Bao bọc toàn bộ mã trong một IIFE để tránh xung đột
+    console.log('voh.js loaded!');
     try {
         function findBestTemplate(width, height) {
             const targetRatio = height / width;
@@ -61,7 +62,6 @@
         }
 
         const adObserver = new IntersectionObserver((entries, observer) => {
-            console.log('IntersectionObserver gets starting ...');
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const adSlot = entry.target;
