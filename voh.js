@@ -5,12 +5,12 @@
             const targetRatio = height / width;
             const templates = [
                 // QUAN TRỌNG: Sử dụng URL đầy đủ đến các template
-                { width: 300, height: 600, url: 'https://ads.msdigital.vn/fallback/voh_300x600.html' },
-                { width: 300, height: 250, url: 'https://ads.msdigital.vn/fallback/voh_300x250.html' },
-                { width: 728, height: 90,  url: 'https://ads.msdigital.vn/fallback/voh_728x90.html' },
-                { width: 390, height: 390, url: 'https://ads.msdigital.vn/fallback/voh_390x390.html' }
+                { width: 300, height: 600, url: 'https://msdigita.github.io/fallback/voh_300x600.html' },
+                { width: 300, height: 250, url: 'https://msdigita.github.io/fallback/voh_300x250.html' },
+                { width: 728, height: 90,  url: 'https://msdigita.github.io/fallback/voh_728x90.html' },
+                { width: 390, height: 390, url: 'https://msdigita.github.io/fallback/voh_390x390.html' }
             ];
-            const defaultTemplate = 'https://ads.msdigital.vn/fallback/voh_responsive.html';
+            const defaultTemplate = 'https://msdigita.github.io/fallback/voh_responsive.html';
 
             let bestMatch = null;
             let smallestDiff = Infinity;
