@@ -61,6 +61,7 @@
         }
 
         const adObserver = new IntersectionObserver((entries, observer) => {
+            console.log('IntersectionObserver gets starting ...');
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const adSlot = entry.target;
