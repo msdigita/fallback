@@ -1,5 +1,6 @@
 // File: qc.js - Host trên https://msdigital.vn/qc.js
 (function() {
+    console.log('voh.js loaded!');
     try {
         function findBestTemplate(width, height) {
             const targetRatio = height / width;
