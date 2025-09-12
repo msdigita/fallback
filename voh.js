@@ -52,7 +52,8 @@
                 // TRƯỜNG HỢP 2: QC bị thu gọn -> Chèn 1 div mới ở bên dưới
                 // Cần 1 kích thước tham chiếu. Lấy từ data-ad-format="auto" không đáng tin cậy.
                 // Chúng ta sẽ giả định một kích thước mặc định hợp lý nếu không thể xác định.
-                const intendedWidth = adSlot.parentElement.offsetWidth || 300;
+                // const intendedWidth = adSlot.parentElement.offsetWidth || 300;
+                const intendedWidth = 300;
                 const intendedHeight = 600; // Mặc định là MREC
 
                 const template = findBestTemplate(intendedWidth, intendedHeight);
