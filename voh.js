@@ -1,6 +1,6 @@
-// File: voh.js v5 - Final reliable version
+// File: voh.js v6 - Final Proactive Polling Version
 (function() {
-    console.log('voh.js v5 loaded!');
+    console.log('voh.js v6 loaded!');
     try {
         function findBestTemplate(width, height) {
             const targetRatio = height / width;
@@ -30,38 +30,26 @@
             return bestMatch ? bestMatch : { ...defaultTemplate, width: width, height: height };
         }
         
-        // NÂNG CẤP: Hàm mới để đọc kích thước dự kiến của ad slot
         function getIntendedAdSize(adSlot) {
-            // Ưu tiên 1: Kích thước thực tế nếu nó đủ lớn
             if (adSlot.offsetHeight >= 40) {
                 return { width: adSlot.offsetWidth, height: adSlot.offsetHeight };
             }
-
-            // Ưu tiên 2: Kích thước từ iframe aswift mà AdSense đã tạo
             const aswiftIframe = adSlot.querySelector('iframe[id^="aswift_"]');
             if (aswiftIframe) {
                 const width = parseInt(aswiftIframe.getAttribute('width'), 10);
                 const height = parseInt(aswiftIframe.getAttribute('height'), 10);
-                if (width > 0 && height > 0) {
-                    return { width, height };
-                }
+                if (width > 0 && height > 0) return { width, height };
             }
-
-            // Phương án cuối: Dựa vào chiều rộng của thẻ cha
-            const parentWidth = adSlot.parentElement.offsetWidth || 300;
+            const parentWidth = adSlot.parentElement ? adSlot.parentElement.offsetWidth : 300;
             const defaultHeight = parentWidth > 500 ? 90 : 250;
             return { width: parentWidth, height: defaultHeight };
         }
 
         function insertFallbackContent(adSlot) {
-            if (adSlot.dataset.fallbackInserted) return;
-            adSlot.dataset.fallbackInserted = 'true';
-
             const intendedSize = getIntendedAdSize(adSlot);
             const template = findBestTemplate(intendedSize.width, intendedSize.height);
 
             if (adSlot.offsetHeight >= 40) {
-                // TRƯỜNG HỢP 1: QC giữ nguyên chiều cao -> Chèn vào trong
                 const iframe = document.createElement('iframe');
                 iframe.src = template.url;
                 iframe.title = "Gợi ý sản phẩm";
@@ -72,7 +60,6 @@
                 adSlot.innerHTML = '';
                 adSlot.appendChild(iframe);
             } else {
-                // TRƯỜNG HỢP 2: QC bị thu gọn -> Chèn 1 div mới ở bên dưới
                 const fallbackContainer = document.createElement('div');
                 fallbackContainer.style.width = `${template.width}px`;
                 fallbackContainer.style.height = `${template.height}px`;
@@ -92,30 +79,45 @@
             }
         }
 
-        function observeAdSlot(adSlot) {
+        function handleAdSlot(adSlot) {
             if (adSlot.getAttribute('data-ad-status')) {
                 if (adSlot.getAttribute('data-ad-status') === 'unfilled') {
                     insertFallbackContent(adSlot);
                 }
-                return;
-            }
-            const observer = new MutationObserver((mutationsList, mutationObserver) => {
-                for(const mutation of mutationsList) {
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-ad-status') {
-                        if (adSlot.getAttribute('data-ad-status') === 'unfilled') {
-                            insertFallbackContent(adSlot);
+            } else {
+                const observer = new MutationObserver((mutationsList) => {
+                    for(const mutation of mutationsList) {
+                        if (mutation.attributeName === 'data-ad-status') {
+                            if (adSlot.getAttribute('data-ad-status') === 'unfilled') {
+                                insertFallbackContent(adSlot);
+                            }
+                            observer.disconnect();
+                            return;
                         }
-                        mutationObserver.disconnect();
-                        return;
                     }
-                }
-            });
-            observer.observe(adSlot, { attributes: true });
+                });
+                observer.observe(adSlot, { attributes: true });
+            }
         }
 
-        window.addEventListener('load', () => {
-             document.querySelectorAll('ins.adsbygoogle').forEach(observeAdSlot);
-        });
+        // NÂNG CẤP: Cơ chế chủ động quét và xử lý
+        let scanCount = 0;
+        const scanInterval = setInterval(() => {
+            // Tìm tất cả các ad slot chưa được xử lý
+            const unprocessedSlots = document.querySelectorAll('ins.adsbygoogle:not([data-voh-processed])');
+            
+            unprocessedSlots.forEach(adSlot => {
+                // Đánh dấu là đã xử lý để không quét lại
+                adSlot.dataset.vohProcessed = 'true'; 
+                handleAdSlot(adSlot);
+            });
+
+            scanCount++;
+            // Dừng quét sau 10 giây để giải phóng tài nguyên
+            if (scanCount > 50) { 
+                clearInterval(scanInterval);
+            }
+        }, 200);
 
     } catch (e) {
         console.error('Ad Fallback Script Error:', e);
