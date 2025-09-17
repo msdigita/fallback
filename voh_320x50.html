@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang='vi'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<!-- 1. Thêm Meta Tag khai báo kích thước cho GAM -->
+<meta name='ad.size' content='width=320,height=50'>
+<title>VOH FAST Creative</title>
+<style>
+    body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    .voh-fast-banner {
+        width: 320px;
+        height: 50px;
+        background: linear-gradient(45deg, #d8232a, #f04e30);
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0 12px;
+        box-sizing: border-box;
+        text-decoration: none;
+        cursor: pointer; /* Thêm con trỏ chuột để báo hiệu có thể click */
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .voh-fast-banner:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+    .banner-text {
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.3;
+        text-align: right;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.15);
+        flex-shrink: 0;
+    }
+    .voh-fast-icon {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 12px;
+        background-color: white; 
+        color: #d8232a;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        flex-shrink: 0;
+        animation: subtle-shake 7s ease-in-out infinite;
+    }
+    .voh-fast-icon .text-fast {
+        margin-right: 8px;
+        letter-spacing: 0.5px;
+        transition: transform 0.3s ease;
+    }
+    .voh-fast-icon .paper-stack {
+        position: relative;
+        width: 12px;
+        height: 14px;
+    }
+    .paper-stack .paper {
+        position: absolute;
+        width: 11px;
+        height: 14px;
+        background-color: #e52d27;
+        border: 0.5px solid #ffffff;
+        border-radius: 2px;
+        transition: transform 0.3s ease;
+    }
+    .paper-stack .paper:nth-child(1) { z-index: 3; top: 0; left: 0; }
+    .paper-stack .paper:nth-child(2) { z-index: 2; top: 1px; left: 1px; transform: rotate(8deg); }
+    .paper-stack .paper:nth-child(3) { z-index: 1; top: 2px; left: 2px; transform: rotate(16deg); }
+    
+    .voh-fast-banner:hover .paper-stack .paper:nth-child(2) { transform: rotate(-6deg); }
+    .voh-fast-banner:hover .paper-stack .paper:nth-child(3) { transform: rotate(-12deg); }
+    .voh-fast-banner:hover .text-fast { transform: translateX(-2px); }
+    
+    @keyframes subtle-shake {
+      0%, 15%, 100% { transform: rotate(0deg); }
+      2% { transform: rotate(-4deg); }
+      4% { transform: rotate(4deg); }
+      6% { transform: rotate(-3deg); }
+      8% { transform: rotate(3deg); }
+      10% { transform: rotate(-2deg); }
+      12% { transform: rotate(2deg); }
+    }
+</style>
+<!-- 2. Khai báo clickTag trong <head> để GAM dễ nhận diện -->
+<script type='text/javascript'>
+    // Sử dụng URLSearchParams là cách làm tiêu chuẩn để lấy tham số URL.
+    var urlParams = new URLSearchParams(window.location.search);
+    // GAM sẽ truyền URL đích thông qua tham số 'clickTag'.
+    // Nếu không có, sử dụng link dự phòng để kiểm tra local.
+    var clickTag = urlParams.get('clickTag') || 'https://voh.com.vn/fast/tin-moi-nhat.html';
+</script>
+</head>
+<body>
+
+<!-- Thay thế thẻ <a> bằng thẻ <div> để JavaScript xử lý click -->
+<div id='voh-banner-clickable' class='voh-fast-banner'>
+    <span class='banner-text'>Trải nghiệm lướt tin MỚI</span>
+    <div class='voh-fast-icon'>
+        <span class='text-fast'>FAST</span>
+        <div class='paper-stack'>
+            <div class='paper'></div>
+            <div class='paper'></div>
+            <div class='paper'></div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. JavaScript chỉ còn nhiệm vụ gán sự kiện click -->
+<script type='text/javascript'>
+    var banner = document.getElementById('voh-banner-clickable');
+    banner.addEventListener('click', function() {
+        // Mở link từ biến clickTag đã được khai báo ở trên
+        window.open(clickTag, '_blank');
+    });
+</script>
+
+</body>
+</html>
