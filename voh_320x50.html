@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banner Quảng Cáo VOH Radio Online</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+    }
+    .banner-container {
+        width: 320px;
+        height: 50px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-decoration: none; /* Bỏ gạch chân của thẻ a */
+        cursor: pointer;
+    }
+    .banner-logo {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        border-radius: 8px;
+    }
+    .banner-text-content {
+        flex-grow: 1;
+        padding-left: 8px;
+        color: #333;
+    }
+    .banner-text-content .app-name {
+        font-size: 14px;
+        font-weight: bold;
+        margin: 0;
+        color: #d32f2f; /* Màu đỏ đặc trưng của VOH */
+    }
+    .banner-text-content .cta-text {
+        font-size: 11px;
+        margin: 2px 0 0;
+    }
+    .banner-button {
+        background-color: #d32f2f; /* Màu đỏ */
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 8px 12px;
+        border-radius: 5px;
+        margin-right: 8px;
+        white-space: nowrap; /* Chống xuống dòng */
+        transition: background-color 0.3s;
+    }
+    .banner-container:hover .banner-button {
+        background-color: #b71c1c; /* Màu đỏ sậm hơn khi hover */
+    }
+</style>
+</head>
+<body>
+
+    <a id="voh-banner-link" class="banner-container" target="_blank">
+        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/c1/41/6cc141f7-5273-e39d-fe6e-e41769c3e226/AppIcon-0-0-1x_U007emarketing-0-8-0-sRGB-85-220.png/230x0w.webp" alt="VOH Logo" class="banner-logo">
+        <div class="banner-text-content">
+            <p class="app-name">VOH Radio Online</p>
+            <p class="cta-text">Trải nghiệm tốt nhất trên ứng dụng</p>
+        </div>
+        <div class="banner-button">
+            TẢI NGAY
+        </div>
+    </a>
+    <script>
+    // Hàm thực thi khi trang đã được tải xong
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lấy phần tử banner qua ID
+        var bannerLink = document.getElementById('voh-banner-link');
+
+        // Định nghĩa các link tải ứng dụng
+        var iosLink = 'https://apps.apple.com/vn/app/voh-radio-online/id1460544726';
+        var androidLink = 'https://play.google.com/store/apps/details?id=namviet.media.vohapp.android&hl=vi_VN';
+
+        // Lấy thông tin User Agent từ trình duyệt
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Kiểm tra User Agent để xác định hệ điều hành
+        if (/android/i.test(userAgent)) {
+            // Nếu là Android, gán link CH Play
+            bannerLink.href = androidLink;
+        } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            // Nếu là iOS (iPad, iPhone, iPod), gán link App Store
+            bannerLink.href = iosLink;
+        } else {
+            // Đối với các hệ điều hành khác (Desktop...), có thể mặc định 1 link hoặc link tới trang chủ
+            // Ở đây ta ưu tiên App Store làm mặc định
+            bannerLink.href = iosLink;
+        }
+    });
+</script>
+
+</body>
+</html>
