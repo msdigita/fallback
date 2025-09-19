@@ -41,7 +41,7 @@
                 if (width > 0 && height > 0) return { width, height };
             }
             const parentWidth = adSlot.parentElement ? adSlot.parentElement.offsetWidth : 300;
-            const defaultHeight = parentWidth > 500 ? 90 : 250;
+            const defaultHeight = parentWidth > 500 ? 90 : 600;
             return { width: parentWidth, height: defaultHeight };
         }
 
