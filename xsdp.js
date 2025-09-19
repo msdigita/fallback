@@ -117,7 +117,7 @@
             if (scanCount > 50) { 
                 clearInterval(scanInterval);
             }
-        }, 200);
+        }, 500);
 
     } catch (e) {
         console.error('Ad Fallback Script Error:', e);
